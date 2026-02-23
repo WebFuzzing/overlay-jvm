@@ -1,0 +1,66 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.webfuzzing</groupId>
+    <artifactId>overlay-jvm</artifactId>
+
+    <version>0.0.1-SNAPSHOT</version>
+
+    <inceptionYear>2026</inceptionYear>
+    <name>overlay-jvm</name>
+    <description>JVM Library (e.g., for Java and Kotlin) to support OpenAPI Overlay transformations</description>
+    <url>https://github.com/WebFuzzing/overlay-jvm</url>
+    <packaging>pom</packaging>
+
+
+    <issueManagement>
+        <system>Github</system>
+        <url>https://github.com/WebFuzzing/overlay-jvm/issues</url>
+    </issueManagement>
+
+    <scm>
+        <connection>scm:git:https://github.com/WebFuzzing/overlay-jvm.git</connection>
+        <developerConnection>scm:git:https://github.com/WebFuzzing/overlay-jvm.git</developerConnection>
+        <url>https://github.com/WebFuzzing/overlay-jvm/tree/master</url>
+    </scm>
+
+    <developers>
+        <developer>
+            <id>arcuri82</id>
+            <name>Andrea Arcuri</name>
+            <email>arcuri82@gmail.com</email>
+            <url>http://www.arcuriandrea.org</url>
+            <timezone>2</timezone>
+            <roles>
+                <role>Architect/Developer</role>
+            </roles>
+        </developer>
+    </developers>
+
+    <licenses>
+        <license>
+            <name>Apache License, Version 2.0</name>
+            <url>https://www.apache.org/licenses/LICENSE-2.0.txt</url>
+            <distribution>repo</distribution>
+        </license>
+    </licenses>
+
+
+    <build>
+        <plugins>
+            <plugin>
+            <groupId>org.apache.maven.plugins</groupId>
+            <artifactId>maven-surefire-plugin</artifactId>
+            <version>3.5.4</version>
+            <configuration>
+            <rerunFailingTestsCount>2</rerunFailingTestsCount>
+            <trimStackTrace>false</trimStackTrace>
+            <argLine>-ea -Xms1024m -Xmx4096m -Xss4m -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=GB</argLine>
+            <runOrder>alphabetical</runOrder>
+            </configuration>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
