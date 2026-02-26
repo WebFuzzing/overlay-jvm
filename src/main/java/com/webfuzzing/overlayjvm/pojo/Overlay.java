@@ -1,5 +1,7 @@
 package com.webfuzzing.overlayjvm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 /**
  * https://spec.openapis.org/overlay/latest.html#fixed-fields
  */
@@ -23,7 +25,7 @@ public class Overlay {
      *
      * NOTE: "extends" is a protected keyword in Java
      */
-    @JsonField("extends")
+    @JsonProperty("extends")
     public String extends_;
 
     /**
