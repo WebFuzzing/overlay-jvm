@@ -1,5 +1,7 @@
 package com.webfuzzing.overlayjvm.pojo;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.databind.JsonNode;
 
 /**
@@ -7,17 +9,47 @@ import com.fasterxml.jackson.databind.JsonNode;
  */
 public class Action {
 
+    private final String target;
+    private final String description;
+    private final JsonNode update;
+    private final String copy;
+    private final Boolean remove;
+
+    @JsonCreator
+    public Action(
+            @JsonProperty(value = "target", required = true)
+            String target,
+            @JsonProperty("description")
+            String description,
+            @JsonProperty("update")
+            JsonNode update,
+            @JsonProperty("copy")
+            String copy,
+            @JsonProperty("remove")
+            Boolean remove
+    ) {
+        this.target = target;
+        this.description = description;
+        this.update = update;
+        this.copy = copy;
+        this.remove = remove;
+    }
+
     /**
      * REQUIRED
      * A RFC9535 JSONPath query expression selecting nodes in the target document.
      */
-    public String target;
+    public String getTarget() {
+        return target;
+    }
 
     /**
      * A description of the action.
      * [CommonMark] syntax MAY be used for rich text representation.
      */
-    public String description;
+    public String getDescription() {
+        return description;
+    }
 
     /**
      * If the target selects object nodes, the value of this field MUST be an object with the properties
@@ -28,7 +60,9 @@ public class Action {
      * each selected node.
      * This field has no impact if the remove field of this action object is true or if the copy field contains a value.
      */
-    public JsonNode update;
+    public JsonNode getUpdate() {
+        return update;
+    }
 
     /**
      * A JSONPath expression selecting a single node to copy into the target nodes.
@@ -40,12 +74,16 @@ public class Action {
      * each selected node.
      * This field has no impact if the remove field of this action object is true or if the update field contains a value.
      */
-    public String copy;
+    public String getCopy() {
+        return copy;
+    }
 
     /**
      * A boolean value that indicates that each of the target nodes MUST be removed from the the map
      * or array it is contained in.
      * The default value is false.
      */
-    public Boolean remove;
+    public Boolean getRemove() {
+        return remove;
+    }
 }
