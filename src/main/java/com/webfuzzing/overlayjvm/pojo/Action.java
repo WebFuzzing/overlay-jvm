@@ -25,7 +25,7 @@ public class Action {
             JsonNode update,
             @JsonProperty("copy")
             String copy,
-            @JsonProperty("remove")
+            @JsonProperty(value = "remove", defaultValue = "false")
             Boolean remove
     ) {
         this.target = target;
