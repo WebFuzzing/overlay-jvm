@@ -24,4 +24,14 @@ public class ProcessorV1_0_0Test {
                 () -> Processor.parseOverlay(new File("src/test/resources/oas-overlay-java/overlays/not-overlay.yaml"))
         );
     }
+
+    @Test
+    public void testInvalidAction(){
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> Processor.parseOverlay(new File("src/test/resources/oas-overlay-java/overlays/not-jsonpath.yaml"))
+        );
+    }
+
+    FIXME should check all differences between 1.0.0 and 1.1.0... eg regarding required fields
 }

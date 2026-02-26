@@ -3,6 +3,7 @@ package com.webfuzzing.overlayjvm.pojo;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
+import java.util.Collections;
 import java.util.List;
 
 /**
@@ -33,7 +34,7 @@ public class Overlay {
         this.overlay = overlay;
         this.info = info;
         this.extends_ = extends_;
-        this.actions = actions;
+        this.actions = Collections.unmodifiableList(actions);
     }
 
     /**
