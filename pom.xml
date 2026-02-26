@@ -11,7 +11,7 @@
     <name>overlay-jvm</name>
     <description>JVM Library (e.g., for Java and Kotlin) to support OpenAPI Overlay transformations</description>
     <url>https://github.com/WebFuzzing/overlay-jvm</url>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
 
 
     <issueManagement>
@@ -48,10 +48,14 @@
 
 
     <properties>
+        <java.version>1.8</java.version>
         <jackson.version>2.14.3</jackson.version>
+        <junit.jupiter.version>5.7.2</junit.jupiter.version>
+        <junit.platform.version>1.7.2</junit.platform.version>
     </properties>
 
     <dependencies>
+        <!--  Jackson      -->
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-core</artifactId>
@@ -72,20 +76,62 @@
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>${jackson.version}</version>
         </dependency>
+
+        <!--  JUnit      -->
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-engine</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.platform</groupId>
+            <artifactId>junit-platform-launcher</artifactId>
+            <version>${junit.platform.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-params</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.junit.jupiter</groupId>
+            <artifactId>junit-jupiter-api</artifactId>
+            <version>${junit.jupiter.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
         <plugins>
             <plugin>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-surefire-plugin</artifactId>
-            <version>3.5.4</version>
-            <configuration>
-            <rerunFailingTestsCount>2</rerunFailingTestsCount>
-            <trimStackTrace>false</trimStackTrace>
-            <argLine>-ea -Xms1024m -Xmx4096m -Xss4m -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=GB</argLine>
-            <runOrder>alphabetical</runOrder>
-            </configuration>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.5.1</version>
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-surefire-plugin</artifactId>
+                <version>3.5.4</version>
+                <configuration>
+                    <rerunFailingTestsCount>2</rerunFailingTestsCount>
+                    <trimStackTrace>false</trimStackTrace>
+                    <argLine>-ea -Xms1024m -Xmx4096m -Xss4m -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=GB</argLine>
+                    <runOrder>alphabetical</runOrder>
+                </configuration>
             </plugin>
         </plugins>
     </build>
