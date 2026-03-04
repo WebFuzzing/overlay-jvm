@@ -1,4 +1,4 @@
-package com.webfuzzing.overlayjvm.pojo;
+package com.webfuzzing.overlayjvm.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -85,5 +85,28 @@ public class Action {
      */
     public Boolean getRemove() {
         return remove;
+    }
+
+    public boolean isRemoveAction(){
+        return remove != null && remove;
+    }
+
+    public boolean isUpdateAction(){
+        return !isRemoveAction() && copy == null && update != null;
+    }
+
+    public boolean isCopyAction(){
+        return !isRemoveAction() && update == null && copy != null;
+    }
+
+    @Override
+    public String toString() {
+        return "Action{" +
+                "target='" + target + '\'' +
+                ", description='" + description + '\'' +
+                ", update=" + update +
+                ", copy='" + copy + '\'' +
+                ", remove=" + remove +
+                '}';
     }
 }

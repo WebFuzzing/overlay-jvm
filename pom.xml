@@ -50,8 +50,8 @@
     <properties>
         <java.version>1.8</java.version>
         <jackson.version>2.14.3</jackson.version>
-        <junit.jupiter.version>5.7.2</junit.jupiter.version>
-        <junit.platform.version>1.7.2</junit.platform.version>
+        <junit.jupiter.version>5.14.3</junit.jupiter.version>
+        <junit.platform.version>1.14.3</junit.platform.version>
     </properties>
 
     <dependencies>
@@ -75,6 +75,14 @@
             <groupId>com.fasterxml.jackson.dataformat</groupId>
             <artifactId>jackson-dataformat-yaml</artifactId>
             <version>${jackson.version}</version>
+        </dependency>
+
+        <!-- To handle RFC9535 JSONPath -->
+        <dependency>
+            <groupId>com.jayway.jsonpath</groupId>
+            <artifactId>json-path</artifactId>
+            <!--  Version 3.0 requires updating to Jackson 3  and JDK 17 -->
+            <version>2.10.0</version>
         </dependency>
 
         <!--  JUnit      -->
@@ -125,7 +133,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.5.4</version>
+                <version>3.5.5</version>
                 <configuration>
                     <rerunFailingTestsCount>2</rerunFailingTestsCount>
                     <trimStackTrace>false</trimStackTrace>

@@ -69,18 +69,19 @@ public class ProcessorV1_0_0Test {
 
     @ParameterizedTest
     @MethodSource("overlayProvider")
-    public void testOverlay(Data data) {
-
-        String base = "src/test/resources/oas-overlay-java";
+    public void testOverlay(Data data) throws Exception {
 
         try {
-            String openApi = new String(Files.readAllBytes(Paths.get(base,data.openApi)));
-            String overlay = new String(Files.readAllBytes(Paths.get(base,data.overlay)));
-            String expectedResult = new String(Files.readAllBytes(Paths.get(base,data.expected)));
+            String base = "src/test/resources/oas-overlay-java";
+
+            String openApi = new String(Files.readAllBytes(Paths.get(base, data.openApi)));
+            String overlay = new String(Files.readAllBytes(Paths.get(base, data.overlay)));
+            String expectedResult = new String(Files.readAllBytes(Paths.get(base, data.expected)));
             String result = Processor.applyOverlay(openApi, overlay);
             assertEquals(result, expectedResult);
-        } catch (IOException e) {
-            fail(e.getMessage(), e);
+        } catch (Exception e){
+            e.printStackTrace();
+            throw e;
         }
     }
 

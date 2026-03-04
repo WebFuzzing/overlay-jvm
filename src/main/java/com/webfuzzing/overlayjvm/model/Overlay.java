@@ -1,4 +1,4 @@
-package com.webfuzzing.overlayjvm.pojo;
+package com.webfuzzing.overlayjvm.model;
 
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
