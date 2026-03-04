@@ -34,4 +34,9 @@ public class Processor {
             throw new IllegalArgumentException(e);
         }
     }
+
+    public static String applyOverlay(String openApiSchema, String overlayContent){
+
+        return "TODO";
+    }
 }
