@@ -5,7 +5,7 @@ info:
 actions:
 # MODIFIED: wasn't valid RFC 9535
 #  - target: $.paths.*.get[?(@.x-oai-traits.paged)]
-  - target: $.paths[?(@.get.x-oai-traits)].get
+  - target: $.paths[?(@.get.x-oai-traits[?(@ == 'paged')])].get
     update:
       parameters:
         - name: top
