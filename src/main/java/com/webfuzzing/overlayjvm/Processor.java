@@ -16,6 +16,7 @@ import com.webfuzzing.overlayjvm.model.Overlay;
 import org.noear.snack4.ONode;
 
 import java.io.File;
+import java.util.Map;
 
 public class Processor {
 
@@ -79,11 +80,40 @@ public class Processor {
         //TODO
     }
 
+    private static void mergeObjects(ONode x, ONode y) {
+        if (!x.isObject()) {
+            throw new IllegalArgumentException("Invalid object definition for x: " + x);
+        }
+        if (!y.isObject()) {
+            throw new IllegalArgumentException("Invalid object definition for y: " + y);
+        }
+
+        for (Map.Entry<String, ONode> k : y.getObjectUnsafe().entrySet()) {
+            if (!x.hasKey(k.getKey())) {
+                //whole insertion, as entry was not present
+                x.set(k.getKey(), k.getValue());
+            } else {
+                //need to merge, recursively
+                if(k.getValue().isObject()) {
+                    mergeObjects(x.get(k.getKey()), k.getValue());
+                } else {
+                    //TODO
+                }
+            }
+        }
+    }
+
     private static void handleUpdate(ONode openApi, Action a) {
 
         ONode selection = openApi.select(a.getTarget());
         if(selection.isValue()){
             selection.setValue(a.getUpdate().asText());
+            return;
+        }
+
+        if(selection.isObject()){
+            ONode update = ONode.ofJson(a.getUpdate().toString());
+            mergeObjects(selection, update);
             return;
         }
 

@@ -80,7 +80,7 @@ public class ProcessorV1_0_0Test {
         expectedResult = FormatUtils.normalizeYaml(expectedResult);
 
         String result = Processor.applyOverlay(openApi, overlay);
-        assertEquals(result, expectedResult);
+        assertEquals(expectedResult, result);
     }
 
     public static class Data {
