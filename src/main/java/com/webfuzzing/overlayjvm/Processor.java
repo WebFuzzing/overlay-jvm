@@ -92,16 +92,21 @@ public class Processor {
                     mergeObjects(x.get(k.getKey()), k.getValue());
                 } else if(k.getValue().isValue()){
                     x.set(k.getKey(), k.getValue());
+                } else if(k.getValue().isArray()){
+                    x.get(k.getKey()).addAll(k.getValue().getArrayUnsafe());
                 } else {
-                    //TODO array
+                    throw new IllegalArgumentException("Invalid type for: " + k.getKey());
                 }
             }
         }
     }
 
     private static void handleUpdate(ONode openApi, Action a) {
-
         ONode selection = openApi.select(a.getTarget());
+        applyUpdate(selection, a);
+    }
+
+    private static void applyUpdate(ONode selection, Action a) {
         if(selection.isValue()){
             selection.setValue(a.getUpdate().asText());
             return;
@@ -114,40 +119,8 @@ public class Processor {
         }
 
         for(ONode node : selection.getArray()){
-            if(node.isObject()){
-                //TODO
-            } else if(node.isArray()){
-                //TODO
-            } else {
-                node.setValue(a.getUpdate().toString());
-            }
+            applyUpdate(node, a);
         }
-
-//        ArrayNode results = jsonpath.parse(openApi).read(a.getTarget());
-//        for (JsonNode result : results) {
-//            ArrayNode addResults = JsonPath.read(openApi, result.asText());
-//            for (JsonNode addResult : addResults) {
-//                if (addResult instanceof ObjectNode) {
-//                    mergeChanges((ObjectNode)addResult, (ObjectNode)a.getUpdate());
-//                } else if (addResult instanceof ArrayNode) {
-//                    ((ArrayNode)addResult).add(a.getUpdate());
-//                } //else the JSONPointer points at a field and this is ignored as per the spec
-//            }
-//        }
-    }
-
-    private static void mergeChanges(ObjectNode orig, ObjectNode updates) {
-//        Iterator<String> updateFields = updates.fieldNames();
-//        while (updateFields.hasNext()) {
-//            String updateField = updateFields.next();
-//            if(orig.get(updateField) != null && orig.get(updateField).isArray()) {
-//                orig.withArray(updateField).addAll((ArrayNode)updates.get(updateField));
-//            } else if (orig.get(updateField) != null && orig.get(updateField).isObject()) {
-//                mergeChanges((ObjectNode)orig.get(updateField), (ObjectNode)updates.get(updateField));
-//            } else {
-//                orig.set(updateField, updates.get(updateField));
-//            }
-//        }
     }
 
     private static void handleRemove(ONode openApi, Action a) {
