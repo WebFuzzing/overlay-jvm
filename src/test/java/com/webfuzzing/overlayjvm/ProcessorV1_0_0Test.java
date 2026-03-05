@@ -15,19 +15,19 @@ import static org.junit.jupiter.api.Assertions.*;
 
 /**
  * Tests here are based on the data files taken from:
- *
+ * <p>
  * https://github.com/IBM/oas-overlay-java
- *
+ * <p>
  * in February 2026.
  * These tests rely on specs 1.0.0.
  * All new tests should not come here, and rather use latest version of Overlay specs
- *
+ * <p>
  * https://learn.openapis.org/upgrading/overlay-v1.0-to-v1.1.html
  */
 public class ProcessorV1_0_0Test {
 
     @Test
-    public void testNotOverlay(){
+    public void testNotOverlay() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> Processor.parseOverlay(new File("src/test/resources/oas-overlay-java/overlays/not-overlay.yaml"))
@@ -35,7 +35,7 @@ public class ProcessorV1_0_0Test {
     }
 
     @Test
-    public void testInvalidAction(){
+    public void testInvalidAction() {
         assertThrows(
                 IllegalArgumentException.class,
                 () -> Processor.parseOverlay(new File("src/test/resources/oas-overlay-java/overlays/not-jsonpath.yaml"))
@@ -67,22 +67,19 @@ public class ProcessorV1_0_0Test {
     }
 
 
-    @ParameterizedTest
+    @ParameterizedTest(name = "{0}")
     @MethodSource("overlayProvider")
     public void testOverlay(Data data) throws Exception {
 
-        try {
-            String base = "src/test/resources/oas-overlay-java";
+        String base = "src/test/resources/oas-overlay-java";
 
-            String openApi = new String(Files.readAllBytes(Paths.get(base, data.openApi)));
-            String overlay = new String(Files.readAllBytes(Paths.get(base, data.overlay)));
-            String expectedResult = new String(Files.readAllBytes(Paths.get(base, data.expected)));
-            String result = Processor.applyOverlay(openApi, overlay);
-            assertEquals(result, expectedResult);
-        } catch (Exception e){
-            e.printStackTrace();
-            throw e;
-        }
+        String openApi = new String(Files.readAllBytes(Paths.get(base, data.openApi)));
+        String overlay = new String(Files.readAllBytes(Paths.get(base, data.overlay)));
+        String expectedResult = new String(Files.readAllBytes(Paths.get(base, data.expected)));
+        expectedResult = FormatUtils.normalizeYaml(expectedResult);
+
+        String result = Processor.applyOverlay(openApi, overlay);
+        assertEquals(result, expectedResult);
     }
 
     public static class Data {
@@ -94,6 +91,15 @@ public class ProcessorV1_0_0Test {
             this.openApi = openApi;
             this.overlay = overlay;
             this.expected = expected;
+        }
+
+        @Override
+        public String toString() {
+            return "{" +
+                    "overlay='" + overlay + '\'' +
+                    ", openApi='" + openApi + '\'' +
+                    ", expected='" + expected + '\'' +
+                    '}';
         }
     }
 

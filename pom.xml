@@ -77,13 +77,31 @@
             <version>${jackson.version}</version>
         </dependency>
 
-        <!-- To handle RFC9535 JSONPath -->
         <dependency>
-            <groupId>com.jayway.jsonpath</groupId>
-            <artifactId>json-path</artifactId>
-            <!--  Version 3.0 requires updating to Jackson 3  and JDK 17 -->
-            <version>2.10.0</version>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>2.0.17</version>
+            <scope>provided</scope>
         </dependency>
+
+        <!-- To handle RFC9535 JSONPath -->
+        <!--  Solo-developer, but looks like only existing option in Java -->
+        <dependency>
+            <groupId>org.noear</groupId>
+            <artifactId>snack4-jsonpath</artifactId>
+            <version>4.0.34</version>
+        </dependency>
+
+        <!--
+            Popular library, used in  oas-overlay-java, but it is not  RFC9535 compliant
+            https://github.com/json-path/JsonPath/issues/999
+         -->
+<!--        <dependency>-->
+<!--            <groupId>com.jayway.jsonpath</groupId>-->
+<!--            <artifactId>json-path</artifactId>-->
+<!--            &lt;!&ndash;  Version 3.0 requires updating to Jackson 3  and JDK 17 &ndash;&gt;-->
+<!--            <version>2.10.0</version>-->
+<!--        </dependency>-->
 
         <!--  JUnit      -->
         <dependency>
