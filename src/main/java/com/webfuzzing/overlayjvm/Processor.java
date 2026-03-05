@@ -103,8 +103,12 @@ public class Processor {
     private static void handleUpdate(ONode openApi, Action a) {
         ONode selection = openApi.select(a.getTarget());
         if(selection.isArray() && selection.isEmpty()){
-            //TODO throwing could be an option
-            throw new IllegalArgumentException("JsonPath selection return no elements: " + a.getTarget());
+            /*
+                From specs: "If the target JSONPath expression selects zero nodes,
+                             the action succeeds without changing the target document."
+             */
+            //throw new IllegalArgumentException("JsonPath selection return no elements: " + a.getTarget());
+            return;
         }
 
         applyUpdate(selection, a);
