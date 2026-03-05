@@ -22,38 +22,10 @@ public class Processor {
 
     private static final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());
 
-    //    private static final ParseContext jsonpath = JsonPath.using(Configuration.builder()
-//            .options(Option.AS_PATH_LIST)
-//            .build());
-
     static {
         mapper.enable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
     }
 
-//    static {
-//        //For JsonPath
-//        Configuration.setDefaults(new Configuration.Defaults() {
-//
-//            private final JsonProvider jsonProvider = new JacksonJsonNodeJsonProvider(mapper);
-//            private final MappingProvider mappingProvider = new JacksonMappingProvider();
-//
-//            @Override
-//            public JsonProvider jsonProvider() {
-//                return jsonProvider;
-//            }
-//
-//            @Override
-//            public MappingProvider mappingProvider() {
-//                return mappingProvider;
-//            }
-//
-//            @Override
-//            public Set<Option> options() {
-//                return EnumSet.of(Option.ALWAYS_RETURN_LIST, Option.SUPPRESS_EXCEPTIONS);
-//            }
-//
-//        });
-//    }
 
     public static Overlay parseOverlay(File file){
         try {
@@ -72,48 +44,25 @@ public class Processor {
     }
 
 
-//    private static String ensureJson(String openApiSchema){
-//        try {
-//            JsonNode root = mapper.readTree(openApiSchema);
-//            return (new ObjectMapper()).writerWithDefaultPrettyPrinter().writeValueAsString(root);
-//        } catch (JsonProcessingException e) {
-//            throw new IllegalArgumentException(e);
-//        }
-//    }
-
     public static String applyOverlay(String openApiSchema, String overlayContent){
 
         Overlay overlay = parseOverlay(overlayContent);
-        JsonNode openApi;
-        try {
-            openApi = mapper.readTree(openApiSchema);
-        } catch (JsonProcessingException e) {
-            throw new IllegalArgumentException(e);
-        }
-
-//        String openApiJson = ensureJson(openApiSchema);
         OpenAPIInfo schemaInfo = OpenAPIInfo.fromSchema(openApiSchema);
-
         ONode schema = ONode.ofJson(schemaInfo.getJson());
 
         for(Action a : overlay.getActions()){
             if(a.isRemoveAction()){
                 handleRemove(schema, a);
             } else if(a.isUpdateAction()){
-                handleUpdate(openApi, a);
+                handleUpdate(schema, a);
             } else if(a.isCopyAction()){
-                handleCopy(openApi, a);
+                handleCopy(schema, a);
             } else {
                 throw new IllegalArgumentException("Invalid action definition: " + a);
             }
         }
 
-//        try {
-//            return mapper.writeValueAsString(openApi);
-//        } catch (JsonProcessingException e) {
-//            throw new IllegalArgumentException(e);
-//        }
-
+        //give back result with same format as in input
         String result = schema.toJson();
 
         if(schemaInfo.getType() == Format.JSON) {
@@ -126,11 +75,27 @@ public class Processor {
         throw new IllegalArgumentException("Unsupported type: " + schemaInfo.getType());
     }
 
-    private static void handleCopy(JsonNode openApi, Action a) {
+    private static void handleCopy(ONode openApi, Action a) {
         //TODO
     }
 
-    private static void handleUpdate(JsonNode openApi, Action a) {
+    private static void handleUpdate(ONode openApi, Action a) {
+
+        ONode selection = openApi.select(a.getTarget());
+        if(selection.isValue()){
+            selection.setValue(a.getUpdate().asText());
+            return;
+        }
+
+        for(ONode node : selection.getArray()){
+            if(node.isObject()){
+                //TODO
+            } else if(node.isArray()){
+                //TODO
+            } else {
+                node.setValue(a.getUpdate().toString());
+            }
+        }
 
 //        ArrayNode results = jsonpath.parse(openApi).read(a.getTarget());
 //        for (JsonNode result : results) {
@@ -160,32 +125,6 @@ public class Processor {
     }
 
     private static void handleRemove(ONode openApi, Action a) {
-
         openApi.delete(a.getTarget());
     }
-//        private static void handleRemove(JsonNode openApi, Action a) {
-//        Collection<JsonNode> results;
-//        try {
-//            results = ctx.read(a.getTarget());
-//        } catch (Exception e){
-//            // jayway hides the stack traces!!!!!!!!!!!!!!
-//            throw new IllegalArgumentException(e.getMessage(), e);
-//        }
-//
-//        for (JsonNode result : results) {
-//            String path = result.asText();
-//
-//            String parent = path.substring(0, path.lastIndexOf("["));
-//            ArrayNode removeResults = JsonPath.read(openApi, parent);
-//            for (JsonNode toRemove : removeResults) {
-//                if (toRemove instanceof ObjectNode) {
-//                    String element = path.substring(path.lastIndexOf("[")+2, path.length()-2);
-//                    ((ObjectNode)toRemove).remove(element);
-//                } else if (toRemove instanceof ArrayNode) {
-//                    int element = Integer.parseInt(path.substring(path.lastIndexOf("[")+1, path.lastIndexOf("]")));
-//                    ((ArrayNode)toRemove).remove(element);
-//                }
-//            }
-//        }
-//    }
 }

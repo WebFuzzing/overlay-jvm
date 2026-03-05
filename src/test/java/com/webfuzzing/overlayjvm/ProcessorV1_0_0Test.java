@@ -59,6 +59,7 @@ public class ProcessorV1_0_0Test {
                 new Data("/openapi/town.yaml", "/overlays/remove-example.yaml", "/expected/town-remove-example.yaml"),
                 new Data("/openapi/town.yaml", "/overlays/remove-descriptions.yaml", "/expected/town-remove-descriptions.yaml"),
                 new Data("/openapi/openapi-with-servers.yaml", "/overlays/remove-server.yaml", "/expected/one-less-server.yaml"),
+                //this seems was wrong... you are allowed to modify info.version
                 new Data("/openapi/immutable.yaml", "/overlays/immutable.yaml", "/expected/immutable.yaml"),
                 new Data("/openapi/responses.yaml", "/overlays/remove-responses.yaml", "/expected/remove-responses.yaml")
                 //Commented out as JSON Path doesn't parse and find as expected

@@ -1,5 +1,6 @@
 openapi: 3.1.0
 info:
-  version: 1.0.0
+  # MODIFIED: you are allowed to make changes to 'version'
+  version: 1.1.0
   title: API
 paths: {}

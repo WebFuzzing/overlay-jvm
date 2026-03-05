@@ -1,4 +1,8 @@
 overlay: 1.0.0
+# MODIFIED: info is required
+info:
+  title: Structured Overlay
+  version: 2.0.0
 actions:
-- target: info.version
+- target: $.info.version
   update: 1.1.0
