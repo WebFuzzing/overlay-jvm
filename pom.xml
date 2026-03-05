@@ -85,7 +85,6 @@
         </dependency>
 
         <!-- To handle RFC9535 JSONPath -->
-        <!--  Solo-developer, but looks like only existing option in Java -->
         <dependency>
             <groupId>org.noear</groupId>
             <artifactId>snack4-jsonpath</artifactId>

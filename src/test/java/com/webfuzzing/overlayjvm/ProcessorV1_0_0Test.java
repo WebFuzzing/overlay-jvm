@@ -51,8 +51,7 @@ public class ProcessorV1_0_0Test {
     public static Stream<Data> overlayProvider() {
 
         return Stream.of(
-                // Commented out as JSON Path doesn't parse path correctly
-                // new Data("/openapi/town.yaml", "/overlays/remove-properties.yaml", "/expected/town-remove-properties.yaml"),
+                new Data("/openapi/town.yaml", "/overlays/remove-properties.yaml", "/expected/town-remove-properties.yaml"),
                 new Data("/openapi/petstore.yaml", "/overlays/overlay.yaml", "/expected/output1.yaml"),
                 new Data("/openapi/town.yaml", "/overlays/building-description.yaml", "/expected/town-building-description.yaml"),
                 new Data("/openapi/town.yaml", "/overlays/update-root.yaml", "/expected/town-root-updated.yaml"),
@@ -61,9 +60,9 @@ public class ProcessorV1_0_0Test {
                 new Data("/openapi/openapi-with-servers.yaml", "/overlays/remove-server.yaml", "/expected/one-less-server.yaml"),
                 //this seems was wrong... you are allowed to modify info.version
                 new Data("/openapi/immutable.yaml", "/overlays/immutable.yaml", "/expected/immutable.yaml"),
-                new Data("/openapi/responses.yaml", "/overlays/remove-responses.yaml", "/expected/remove-responses.yaml")
-                //Commented out as JSON Path doesn't parse and find as expected
-                //new Data("/openapi/traits.yaml", "/overlays/traits.yaml", "/expected/traits.yaml"},
+                new Data("/openapi/responses.yaml", "/overlays/remove-responses.yaml", "/expected/remove-responses.yaml"),
+                //this seems was wrong... invalid RFC 9535 path
+                new Data("/openapi/traits.yaml", "/overlays/traits.yaml", "/expected/traits.yaml")
         );
     }
 

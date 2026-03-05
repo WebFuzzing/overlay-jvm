@@ -3,7 +3,6 @@ package com.webfuzzing.overlayjvm;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
 import com.webfuzzing.overlayjvm.model.Action;
 import com.webfuzzing.overlayjvm.model.Overlay;
@@ -103,6 +102,11 @@ public class Processor {
 
     private static void handleUpdate(ONode openApi, Action a) {
         ONode selection = openApi.select(a.getTarget());
+        if(selection.isArray() && selection.isEmpty()){
+            //TODO throwing could be an option
+            throw new IllegalArgumentException("JsonPath selection return no elements: " + a.getTarget());
+        }
+
         applyUpdate(selection, a);
     }
 
