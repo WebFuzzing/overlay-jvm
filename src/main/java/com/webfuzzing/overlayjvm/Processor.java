@@ -2,15 +2,9 @@ package com.webfuzzing.overlayjvm;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-//import com.jayway.jsonpath.*;
-//import com.jayway.jsonpath.spi.json.JacksonJsonNodeJsonProvider;
-//import com.jayway.jsonpath.spi.json.JsonProvider;
-//import com.jayway.jsonpath.spi.mapper.JacksonMappingProvider;
-//import com.jayway.jsonpath.spi.mapper.MappingProvider;
 import com.webfuzzing.overlayjvm.model.Action;
 import com.webfuzzing.overlayjvm.model.Overlay;
 import org.noear.snack4.ONode;
@@ -96,8 +90,10 @@ public class Processor {
                 //need to merge, recursively
                 if(k.getValue().isObject()) {
                     mergeObjects(x.get(k.getKey()), k.getValue());
+                } else if(k.getValue().isValue()){
+                    x.set(k.getKey(), k.getValue());
                 } else {
-                    //TODO
+                    //TODO array
                 }
             }
         }
