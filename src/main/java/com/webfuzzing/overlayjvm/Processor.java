@@ -90,8 +90,7 @@ public class Processor {
         ONode target = openApi.select(a.getTarget());
         ONode copy = openApi.select(a.getCopy());
 
-        //FIXME for primitives and array
-        mergeObjects(target, copy);
+        applyUpdate(target, copy);
     }
 
     private static void mergeObjects(ONode x, ONode y) {
@@ -123,23 +122,23 @@ public class Processor {
 
     private static void handleUpdate(ONode openApi, Action a) {
         ONode selection = openApi.select(a.getTarget());
-        applyUpdate(selection, a);
+        ONode update = ONode.ofJson(a.getUpdate().toString());
+        applyUpdate(selection, update);
     }
 
-    private static void applyUpdate(ONode selection, Action a) {
+    private static void applyUpdate(ONode selection, ONode update) {
         if(selection.isValue()){
-            selection.setValue(a.getUpdate().asText());
+            selection.setValue(update.getValue());
             return;
         }
 
         if(selection.isObject()){
-            ONode update = ONode.ofJson(a.getUpdate().toString());
             mergeObjects(selection, update);
             return;
         }
 
         for(ONode node : selection.getArray()){
-            applyUpdate(node, a);
+            applyUpdate(node, update);
         }
     }
 
