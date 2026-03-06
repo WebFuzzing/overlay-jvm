@@ -62,6 +62,10 @@ public class Processor {
             } else if(a.isUpdateAction()){
                 handleUpdate(schema, a);
             } else if(a.isCopyAction()){
+                if(! schema.exists(a.getCopy())){
+                    //TODO we should log this
+                    continue;
+                }
                 handleCopy(schema, a);
             } else {
                 throw new IllegalArgumentException("Invalid action definition: " + a);
@@ -82,7 +86,12 @@ public class Processor {
     }
 
     private static void handleCopy(ONode openApi, Action a) {
-        //TODO
+
+        ONode target = openApi.select(a.getTarget());
+        ONode copy = openApi.select(a.getCopy());
+
+        //FIXME for primitives and array
+        mergeObjects(target, copy);
     }
 
     private static void mergeObjects(ONode x, ONode y) {

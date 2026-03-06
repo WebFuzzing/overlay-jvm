@@ -134,6 +134,14 @@
             <scope>test</scope>
         </dependency>
 
+        <!--  For comparing transformed schemas -->
+        <dependency>
+            <groupId>org.skyscreamer</groupId>
+            <artifactId>jsonassert</artifactId>
+            <version>1.5.1</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 
     <build>
