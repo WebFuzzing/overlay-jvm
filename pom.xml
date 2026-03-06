@@ -144,7 +144,90 @@
 
     </dependencies>
 
+
+    <profiles>
+        <profile>
+            <!--
+                   This profile is needed when making a deployment to Maven Central.
+
+                   0) make sure you are on the "master" branch
+
+                   1) update release_notes.md before preparing a new release
+
+                   2) manually update <version> in thi file. Typically just remove the -SNAPSHOT tag.
+                      Git commit/push.
+
+                   3) run:
+                      mvn  -P release -DskipTests  deploy
+
+                      IMPORTANT: must make sure you are building with JDK 8!!!
+
+                      make sure it is visible at:
+                      https://central.sonatype.com/artifact/com.webfuzzing/commons
+                      if not, check publishing status at
+                      https://central.sonatype.com/publishing/deployments (requires login)
+
+                   4) run:
+                      git tag v<x.y.z>
+                      git push origin v<x.y.z>
+
+                   5) increase version number, and put back -SNAPSHOT.
+                      Git commit/push.
+              -->
+            <id>release</id>
+            <build>
+                <plugins>
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                    </plugin>
+                    <plugin>
+                        <groupId>org.sonatype.central</groupId>
+                        <artifactId>central-publishing-maven-plugin</artifactId>
+                    </plugin>
+                </plugins>
+            </build>
+        </profile>
+    </profiles>
+
+
+
     <build>
+        <pluginManagement>
+            <plugins>
+                <!-- To deploy to Maven Central
+                    https://central.sonatype.com/account
+                    https://central.sonatype.org/publish/publish-portal-maven/
+                -->
+                <plugin>
+                    <groupId>org.sonatype.central</groupId>
+                    <artifactId>central-publishing-maven-plugin</artifactId>
+                    <version>0.7.0</version>
+                    <extensions>true</extensions>
+                    <configuration>
+                        <publishingServerId>central</publishingServerId>
+                        <autoPublish>true</autoPublish>
+                    </configuration>
+                </plugin>
+                <!-- To sign Jar files before uploading them to Maven Central -->
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-gpg-plugin</artifactId>
+                    <version>1.6</version>
+                    <executions>
+                        <execution>
+                            <id>sign-artifacts</id>
+                            <phase>deploy</phase>
+                            <goals>
+                                <goal>sign</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
+
+
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -165,6 +248,37 @@
                     <argLine>-ea -Xms1024m -Xmx4096m -Xss4m -Dfile.encoding=UTF-8 -Duser.language=en -Duser.country=GB</argLine>
                     <runOrder>alphabetical</runOrder>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.2.0</version>
+                <executions>
+                    <execution>
+                        <id>create-sources</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>3.1.1</version>
+                <configuration>
+                    <source>8</source>
+                </configuration>
+                <executions>
+                    <execution>
+                        <id>create-javadocs</id>
+                        <phase>verify</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
