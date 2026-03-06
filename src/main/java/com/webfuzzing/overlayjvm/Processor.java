@@ -9,6 +9,8 @@ import com.webfuzzing.overlayjvm.model.Overlay;
 import org.noear.snack4.ONode;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 public class Processor {
@@ -38,20 +40,31 @@ public class Processor {
     }
 
 
-    public static String applyOverlay(String openApiSchema, String overlayContent){
+    public static TransformationResult applyOverlay(String openApiSchema, String overlayContent){
+
+        List<String> warnings = new ArrayList<>();
 
         Overlay overlay = parseOverlay(overlayContent);
         OpenAPIInfo schemaInfo = OpenAPIInfo.fromSchema(openApiSchema);
-        ONode schema = ONode.ofJson(schemaInfo.getJson());
+        Format format = schemaInfo.getType();
 
-        for(Action a : overlay.getActions()){
+        if(format != Format.JSON && format != Format.YAML) {
+            //shouldn't really happen, unless we add new type and forgot to handle it
+            throw new IllegalArgumentException("Unsupported type: " + schemaInfo.getType());
+        }
+
+        ONode schema = ONode.ofJson(schemaInfo.getJson());
+        List<Action> actions = overlay.getActions();
+
+        for(int i=0;i<actions.size();i++) {
+            Action a = actions.get(i);
 
             /*
                 From specs: "If the target JSONPath expression selects zero nodes,
                 the action succeeds without changing the target document."
             */
             if(!schema.exists(a.getTarget())){
-                //TODO we should log this
+                warnings.add("["+i+"] Target RFC 9535 JsonPath returned no nodes in the schema: " + a.getTarget());
                 continue;
             }
 
@@ -63,7 +76,7 @@ public class Processor {
                 handleUpdate(schema, a);
             } else if(a.isCopyAction()){
                 if(! schema.exists(a.getCopy())){
-                    //TODO we should log this
+                    warnings.add("["+i+"] RFC 9535 JsonPath 'copy' element returned no nodes in the schema: " + a.getCopy());
                     continue;
                 }
                 handleCopy(schema, a);
@@ -75,14 +88,11 @@ public class Processor {
         //give back result with same format as in input
         String result = schema.toJson();
 
-        if(schemaInfo.getType() == Format.JSON) {
-            return result;
-        }
         if(schemaInfo.getType() == Format.YAML) {
-            return FormatUtils.convertFromJsonToYaml(result);
+            result = FormatUtils.convertFromJsonToYaml(result);
         }
 
-        throw new IllegalArgumentException("Unsupported type: " + schemaInfo.getType());
+        return new TransformationResult(openApiSchema,overlayContent,result,warnings);
     }
 
     private static void handleCopy(ONode openApi, Action a) {

@@ -5,8 +5,9 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.stream.Collectors;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class ProcessorTestBase {
 
@@ -17,13 +18,15 @@ public class ProcessorTestBase {
         String expectedResult = new String(Files.readAllBytes(Paths.get(base, data.expected)));
         expectedResult = FormatUtils.normalizeJson(expectedResult);
 
-        String result = Processor.applyOverlay(openApi, overlay);
-        result = FormatUtils.normalizeJson(result);
+        TransformationResult tr = Processor.applyOverlay(openApi, overlay);
+        String result = FormatUtils.normalizeJson(tr.transformedSchema);
 
 
         //this was failing on field name order :(
         //assertEquals(expectedResult, result);
         JSONAssert.assertEquals(expectedResult, result, JSONCompareMode.LENIENT);
+
+        assertFalse(tr.hasWarnings(), String.join("\n", tr.warnings));
     }
 
     public static class Data {
