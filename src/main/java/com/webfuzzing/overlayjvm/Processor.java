@@ -45,6 +45,18 @@ public class Processor {
         ONode schema = ONode.ofJson(schemaInfo.getJson());
 
         for(Action a : overlay.getActions()){
+
+            /*
+                From specs: "If the target JSONPath expression selects zero nodes,
+                the action succeeds without changing the target document."
+            */
+            if(!schema.exists(a.getTarget())){
+                //TODO we should log this
+                continue;
+            }
+
+            //TODO should check if invalid
+
             if(a.isRemoveAction()){
                 handleRemove(schema, a);
             } else if(a.isUpdateAction()){
@@ -102,15 +114,6 @@ public class Processor {
 
     private static void handleUpdate(ONode openApi, Action a) {
         ONode selection = openApi.select(a.getTarget());
-        if(selection.isArray() && selection.isEmpty()){
-            /*
-                From specs: "If the target JSONPath expression selects zero nodes,
-                             the action succeeds without changing the target document."
-             */
-            //throw new IllegalArgumentException("JsonPath selection return no elements: " + a.getTarget());
-            return;
-        }
-
         applyUpdate(selection, a);
     }
 
@@ -132,6 +135,7 @@ public class Processor {
     }
 
     private static void handleRemove(ONode openApi, Action a) {
-        openApi.delete(a.getTarget());
+        boolean deleted = openApi.delete(a.getTarget());
+        assert(deleted);
     }
 }
