@@ -1,0 +1,12 @@
+overlay: 1.1.0
+info:
+  title: Update the path for an API endpoint
+  version: 1.0.0
+actions:
+  - target: '$.paths'
+    update: { "/new-items": {} }
+  - target: '$.paths["/new-items"]'
+    copy: '$.paths["/items"]'
+  - target: '$.paths["/items"]'
+    remove: true
+    description: 'moves (renames) the "items" path item to "new-items"'

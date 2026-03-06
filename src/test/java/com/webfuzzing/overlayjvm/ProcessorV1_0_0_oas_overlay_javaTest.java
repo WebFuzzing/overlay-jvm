@@ -5,9 +5,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
-import java.io.IOException;
 import java.nio.file.Files;
-import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.stream.Stream;
 
@@ -24,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.*;
  * <p>
  * https://learn.openapis.org/upgrading/overlay-v1.0-to-v1.1.html
  */
-public class ProcessorV1_0_0Test {
+public class ProcessorV1_0_0_oas_overlay_javaTest extends ProcessorTestBase {
 
     @Test
     public void testNotOverlay() {
@@ -69,38 +67,8 @@ public class ProcessorV1_0_0Test {
 
     @ParameterizedTest(name = "{0}")
     @MethodSource("overlayProvider")
-    public void testOverlay(Data data) throws Exception {
-
-        String base = "src/test/resources/oas-overlay-java";
-
-        String openApi = new String(Files.readAllBytes(Paths.get(base, data.openApi)));
-        String overlay = new String(Files.readAllBytes(Paths.get(base, data.overlay)));
-        String expectedResult = new String(Files.readAllBytes(Paths.get(base, data.expected)));
-        expectedResult = FormatUtils.normalizeYaml(expectedResult);
-
-        String result = Processor.applyOverlay(openApi, overlay);
-        assertEquals(expectedResult, result);
-    }
-
-    public static class Data {
-        public final String openApi;
-        public final String overlay;
-        public final String expected;
-
-        public Data(String openApi, String overlay, String expected) {
-            this.openApi = openApi;
-            this.overlay = overlay;
-            this.expected = expected;
-        }
-
-        @Override
-        public String toString() {
-            return "{" +
-                    "overlay='" + overlay + '\'' +
-                    ", openApi='" + openApi + '\'' +
-                    ", expected='" + expected + '\'' +
-                    '}';
-        }
+    public void testOverlay(ProcessorTestBase.Data data) throws Exception {
+        verifyOverlay(data, "src/test/resources/oas-overlay-java");
     }
 
 }

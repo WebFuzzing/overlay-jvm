@@ -1,0 +1,11 @@
+overlay: 1.1.0
+info:
+  title: Create a path and copy the contents of an existing path to the new path
+  version: 1.0.0
+actions:
+  - target: '$.paths'
+    update: { "/other-items": {} }
+  - target: '$.paths["/other-items"]'
+    copy: '$.paths["/items"]'
+    description: 'copies recursively all elements from the "items" path item to the new "other-items" path item while ensuring the node exists before the copy'
+

@@ -1,0 +1,9 @@
+overlay: 1.1.0
+info:
+  title: Copy contents of an existing path to a new location
+  version: 1.0.0
+actions:
+  - target: '$.paths["/some-items"]'
+    copy: '$.paths["/items"]'
+    description: 'copies recursively all elements from the "items" path item to the new "some-items" path item without ensuring the node exists before the copy'
+
