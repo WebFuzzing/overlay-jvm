@@ -1,3 +1,6 @@
+![Maven Central Version](https://img.shields.io/maven-central/v/com.webfuzzing/overlay-jvm)
+
+
 # OVERLAY-JVM
 JVM Library (e.g., for Java and Kotlin) to support [OpenAPI Overlay](https://github.com/OAI/Overlay-Specification) transformations.
 
