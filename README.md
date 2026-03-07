@@ -3,6 +3,8 @@ JVM Library (e.g., for Java and Kotlin) to support [OpenAPI Overlay](https://git
 
 Currently supporting Overlay specs __1.1.0__, and schemas/overlays in either JSON or YAML.
 
+Working for JDK 8 and above. 
+
 
 ## Example Usage
 
