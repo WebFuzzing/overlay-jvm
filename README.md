@@ -22,11 +22,9 @@ tr.warnings; // list of warning messages, if any
 <dependency>
     <groupId>com.webfuzzing</groupId>
     <artifactId>overlay-jvm</artifactId>
-    <version>LATEST</version>
+    <version>0.1.0</version>
 </dependency>
 ```
-
-See release info for latest version number (to replace `LATEST` placeholder).
 
 ## Dependencies
 

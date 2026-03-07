@@ -40,6 +40,22 @@ public class Processor {
     }
 
 
+    /**
+     * Apply an Overlay set of transformations to an OpenAPI schema.
+     * These file representations are passed as String, representing either JSON or YAML formats.
+     * The transformed result format depends on the input OpenAPI format.
+     * For example, if OpenAPI is in YAML, and Overlay is in JSON, the transformed result is in YAML.
+     * <p>
+     * There is no validity check on the input OpenAPI schema, besides it being a syntactically valid
+     * JSON or YAML file representation.
+     * So, technically speaking, the Overlay transformation can be applied to any valid JSON/YAML file.
+     *
+     * @param openApiSchema String representation for a JSON/YAML file, in which transformations are applied on.
+     * @param overlayContent String representation for a JSON/YAML Overlay set of transformations.
+     * @return TransformationResult with the result of the transformation, including possible warning messages, if any.
+     * @throws IllegalArgumentException if the inputs are not valid JSON/YAML files, and if the Overlay is not correct
+     *         according the Overlay's specs. No validation is done on the OpenAPI specs.
+     */
     public static TransformationResult applyOverlay(String openApiSchema, String overlayContent){
 
         List<String> warnings = new ArrayList<>();

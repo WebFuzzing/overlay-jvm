@@ -155,6 +155,7 @@
                    1) update release_notes.md before preparing a new release
 
                    2) manually update <version> in thi file. Typically just remove the -SNAPSHOT tag.
+                      Update the same version number in the README.md.
                       Git commit/push.
 
                    3) run:
