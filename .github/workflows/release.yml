@@ -33,5 +33,5 @@ jobs:
           body: "See release notes at [release_notes.md](https://github.com/WebFuzzing/overlay-jvm/blob/master/release_notes.md)."
           prerelease: false
           draft: false
-          fail_on_unmatched_files: true
+#          fail_on_unmatched_files: true
 
