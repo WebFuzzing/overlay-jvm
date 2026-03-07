@@ -5,7 +5,7 @@
     <groupId>com.webfuzzing</groupId>
     <artifactId>overlay-jvm</artifactId>
 
-    <version>0.1.0</version>
+    <version>0.1.1-SNAPSHOT</version>
 
     <inceptionYear>2026</inceptionYear>
     <name>overlay-jvm</name>
