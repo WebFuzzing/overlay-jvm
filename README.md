@@ -25,7 +25,7 @@ tr.warnings; // list of warning messages, if any
 <dependency>
     <groupId>com.webfuzzing</groupId>
     <artifactId>overlay-jvm</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
