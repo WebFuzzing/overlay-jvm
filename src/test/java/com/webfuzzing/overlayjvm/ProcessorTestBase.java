@@ -49,4 +49,12 @@ public class ProcessorTestBase {
                     '}';
         }
     }
+
+    public static Data getDataFromName(String name){
+        return new Data(
+                "/"+name+"/"+name+"-openapi.yaml",
+                "/"+name+"/"+name+"-overlay.yaml",
+                "/"+name+"/"+name+"-result.yaml"
+        );
+    }
 }
