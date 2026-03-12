@@ -8,7 +8,7 @@ import java.util.stream.Stream;
 
 //FIXME: https://github.com/noear/snackjson/issues/56
 @Disabled
-public class ProcessorV1_1_0_customTest  extends ProcessorTestBase {
+public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
 
     public static Stream<Data> overlayProvider() {
 

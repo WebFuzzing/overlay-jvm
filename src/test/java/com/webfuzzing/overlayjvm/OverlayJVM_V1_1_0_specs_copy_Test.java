@@ -10,7 +10,7 @@ import java.util.stream.Stream;
  *
  * https://spec.openapis.org/overlay/latest.html#copy-example
  */
-class ProcessorV1_1_0_specs_copyTest extends ProcessorTestBase {
+class OverlayJVM_V1_1_0_specs_copy_Test extends ProcessorTestBase {
 
 
     public static Stream<Data> overlayProvider() {

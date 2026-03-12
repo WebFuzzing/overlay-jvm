@@ -5,7 +5,6 @@ import org.skyscreamer.jsonassert.JSONCompareMode;
 
 import java.nio.file.Files;
 import java.nio.file.Paths;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +17,7 @@ public class ProcessorTestBase {
         String expectedResult = new String(Files.readAllBytes(Paths.get(base, data.expected)));
         expectedResult = FormatUtils.normalizeJson(expectedResult);
 
-        TransformationResult tr = Processor.applyOverlay(openApi, overlay);
+        TransformationResult tr = OverlayJVM.applyOverlay(openApi, overlay);
         String result = FormatUtils.normalizeJson(tr.transformedSchema);
 
 

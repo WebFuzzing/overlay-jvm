@@ -13,7 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class Processor {
+/**
+ * Main entry point of this library.
+ */
+public class OverlayJVM {
 
 
     private static final ObjectMapper mapper = new ObjectMapper(new YAMLFactory());

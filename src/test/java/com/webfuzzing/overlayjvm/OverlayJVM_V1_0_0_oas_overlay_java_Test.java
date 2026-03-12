@@ -5,8 +5,6 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
 import java.io.File;
-import java.nio.file.Files;
-import java.nio.file.Paths;
 import java.util.stream.Stream;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -22,13 +20,13 @@ import static org.junit.jupiter.api.Assertions.*;
  * <p>
  * https://learn.openapis.org/upgrading/overlay-v1.0-to-v1.1.html
  */
-public class ProcessorV1_0_0_oas_overlay_javaTest extends ProcessorTestBase {
+public class OverlayJVM_V1_0_0_oas_overlay_java_Test extends ProcessorTestBase {
 
     @Test
     public void testNotOverlay() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> Processor.parseOverlay(new File("src/test/resources/oas-overlay-java/overlays/not-overlay.yaml"))
+                () -> OverlayJVM.parseOverlay(new File("src/test/resources/oas-overlay-java/overlays/not-overlay.yaml"))
         );
     }
 
@@ -36,7 +34,7 @@ public class ProcessorV1_0_0_oas_overlay_javaTest extends ProcessorTestBase {
     public void testInvalidAction() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> Processor.parseOverlay(new File("src/test/resources/oas-overlay-java/overlays/not-jsonpath.yaml"))
+                () -> OverlayJVM.parseOverlay(new File("src/test/resources/oas-overlay-java/overlays/not-jsonpath.yaml"))
         );
     }
 
