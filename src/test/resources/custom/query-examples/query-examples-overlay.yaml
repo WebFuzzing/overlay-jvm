@@ -3,8 +3,13 @@ info:
   title: Add example to x parameter
   version: 1.0.0
 actions:
-  - target: "$['paths']['/api/overlay']['get']['parameters'][?@.name=='x']"
+  - target: "$['paths']['/api/overlay']['get']['parameters'][?@.name == 'x']"
     update:
       examples:
         foo:
           value: foo
+  - target: "$['paths']['/api/overlay']['get']['parameters'][?@.name=='y']"
+    update:
+      examples:
+        bar:
+          value: bar

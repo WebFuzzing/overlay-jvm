@@ -25,6 +25,9 @@ paths:
           required: true
           schema:
             type: string
+          examples:
+            bar:
+              value: bar
       responses:
         "200":
           description: OK
