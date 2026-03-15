@@ -3,12 +3,19 @@ package com.webfuzzing.overlayjvm;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
+import java.io.IOException;
 import java.nio.file.Files;
+import java.nio.file.Path;
 import java.nio.file.Paths;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ProcessorTestBase {
+
+    protected String readResource(String resource) throws Exception {
+        Path path = Paths.get(this.getClass().getClassLoader().getResource(resource).toURI());
+        return new String(Files.readAllBytes(path));
+    }
 
     protected void verifyOverlay(Data data, String base) throws Exception {
 
