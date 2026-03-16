@@ -34,7 +34,7 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
         ONode schema = ONode.ofJson(json);
 
         //----------------------------------------------------
-        //this should return no results
+        //Case (0): this should return no results
         String q0 = "$.a[?@.y]";
         boolean e0 = schema.exists(q0);
         ONode r0 = schema.select(q0);
@@ -45,7 +45,7 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
         assertNull(r0.parent());
 
         //----------------------------------------------------
-        //this should return the empty array in b
+        //Case (1): this should return the empty array in b
         String q1 = "$.b";
         boolean e1 = schema.exists(q1);
         ONode r1 = schema.select(q1);
@@ -57,7 +57,7 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
         assertNotNull(r1.parent());
 
         //----------------------------------------------------
-        //should get the elements in c and d
+        //Case (2): should get the elements in c and d
         String q2 = "$.*.y";
         boolean e2 = schema.exists(q2);
         ONode r2 = schema.select(q2);
@@ -70,7 +70,7 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
         assertEquals(r2.get(0).parent().parent(), r2.get(1).parent().parent());
 
         //----------------------------------------------------
-        // although e is null, it exists
+        //Case (3):  although e is null, it exists
         String q3 = "$.e";
         boolean e3 = schema.exists(q3);
         ONode r3 = schema.select(q3);
@@ -81,7 +81,7 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
         assertNotNull(r3.parent());
 
         //----------------------------------------------------
-        // f is undefined in the document
+        //Case (4):  f is undefined in the document
         String q4 = "$.f";
         boolean e4 = schema.exists(q4);
         ONode r4 = schema.select(q4);
@@ -93,7 +93,7 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
         assertNull(r4.parent());
 
         //----------------------------------------------------
-        // f is undefined
+        //Case (5):  f is undefined
         String q5 = "$.f[?@.y]";
         boolean e5 = schema.exists(q5);
         ONode r5 = schema.select(q5);
