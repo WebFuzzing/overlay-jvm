@@ -39,7 +39,7 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
         boolean e0 = schema.exists(q0);
         ONode r0 = schema.select(q0);
 
-        //assertFalse(e0); //this fails
+        assertFalse(e0);
         assertTrue(r0.isArray());
         assertEquals(0, r0.size());
         assertNull(r0.parent());
@@ -98,7 +98,7 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
         boolean e5 = schema.exists(q5);
         ONode r5 = schema.select(q5);
 
-        //assertFalse(e5); // this fails???
+        assertFalse(e5);
         assertTrue(r5.isArray()); //this is now treated as an empty array?
         assertEquals(0, r5.size());
         assertNull(r5.parent());
