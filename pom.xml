@@ -165,7 +165,7 @@
                       IMPORTANT: must make sure you are building with JDK 8!!!
 
                       make sure it is visible at:
-                      https://central.sonatype.com/artifact/com.webfuzzing/commons
+                      https://central.sonatype.com/artifact/com.webfuzzing/overlay-jvm
                       if not, check publishing status at
                       https://central.sonatype.com/publishing/deployments (requires login)
 
