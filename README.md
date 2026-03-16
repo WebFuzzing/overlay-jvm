@@ -14,7 +14,7 @@ Working for JDK 8 and above.
 ```
 String openApi = ...
 String overlay = ...
-TransformationResult tr = Processor.applyOverlay(openApi, overlay);
+TransformationResult tr = OverlayJVM.applyOverlay(openApi, overlay);
 tr.transformedSchema; // the result of the transformation
 tr.warnings; // list of warning messages, if any 
 ```
@@ -25,7 +25,7 @@ tr.warnings; // list of warning messages, if any
 <dependency>
     <groupId>com.webfuzzing</groupId>
     <artifactId>overlay-jvm</artifactId>
-    <version>0.1.1</version>
+    <version>0.2.0</version>
 </dependency>
 ```
 
