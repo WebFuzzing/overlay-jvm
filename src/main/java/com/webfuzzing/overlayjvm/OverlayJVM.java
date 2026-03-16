@@ -166,8 +166,25 @@ public class OverlayJVM {
             return;
         }
 
-        for(ONode node : selection.getArray()){
-            applyUpdate(node, update);
+        if(selection.isArray()) {
+            /*
+                currently, in snackjson there is no clear way to distinguish between a selected array
+                and an array of results, apart from checking the parent
+             */
+            ONode parent = selection.parent();
+            if(parent == null) {
+                // newly created array containing result nodes
+                for (ONode node : selection.getArray()) {
+                    applyUpdate(node, update);
+                }
+            } else {
+                //the target is an array itself
+                if(update.isArray()) {
+                    selection.addAll(update.getArrayUnsafe());
+                } else {
+                    selection.add(update);
+                }
+            }
         }
     }
 

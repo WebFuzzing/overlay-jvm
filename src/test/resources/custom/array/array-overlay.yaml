@@ -1,0 +1,18 @@
+overlay: 1.1.0
+info:
+  title: Verify different operations on arrays
+  version: 1.0.0
+actions:
+  - target: "$.a[?@.y]" # no results
+    remove: true
+  - target: "$.b" # array
+    update: [1,2,3]
+  - target: "$.b" # already modified array
+    update: 8
+  - target: "$.*.y" # should return objects in c and d
+    update: 7
+  - target: "$.e" # it is null
+    remove: true
+  - target: "$.f" # it is undefined
+    update:
+      f: 9

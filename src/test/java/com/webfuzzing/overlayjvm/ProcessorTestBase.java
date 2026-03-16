@@ -3,7 +3,6 @@ package com.webfuzzing.overlayjvm;
 import org.skyscreamer.jsonassert.JSONAssert;
 import org.skyscreamer.jsonassert.JSONCompareMode;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -27,23 +26,24 @@ public class ProcessorTestBase {
         TransformationResult tr = OverlayJVM.applyOverlay(openApi, overlay);
         String result = FormatUtils.normalizeJson(tr.transformedSchema);
 
+        assertEquals(data.warningsCount, tr.warnings.size(), "Expected " + data.warningsCount + "warning:\n"+String.join("\n", tr.warnings));
 
         //this was failing on field name order :(
         //assertEquals(expectedResult, result);
         JSONAssert.assertEquals(expectedResult, result, JSONCompareMode.LENIENT);
-
-        assertFalse(tr.hasWarnings(), String.join("\n", tr.warnings));
     }
 
     public static class Data {
         public final String openApi;
         public final String overlay;
         public final String expected;
+        public final int warningsCount;
 
-        public Data(String openApi, String overlay, String expected) {
+        public Data(String openApi, String overlay, String expected, int warningsCount) {
             this.openApi = openApi;
             this.overlay = overlay;
             this.expected = expected;
+            this.warningsCount = warningsCount;
         }
 
         @Override
@@ -52,15 +52,17 @@ public class ProcessorTestBase {
                     "overlay='" + overlay + '\'' +
                     ", openApi='" + openApi + '\'' +
                     ", expected='" + expected + '\'' +
+                    ", warningsCount=" + warningsCount +
                     '}';
         }
     }
 
-    public static Data getDataFromName(String name){
+    public static Data getDataFromName(String name, int warningsCount) {
         return new Data(
                 "/"+name+"/"+name+"-openapi.yaml",
                 "/"+name+"/"+name+"-overlay.yaml",
-                "/"+name+"/"+name+"-result.yaml"
+                "/"+name+"/"+name+"-result.yaml",
+                warningsCount
         );
     }
 }

@@ -14,7 +14,8 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
     public static Stream<Data> overlayProvider() {
 
         return Stream.of(
-                getDataFromName("query-examples")
+                getDataFromName("query-examples", 0),
+                getDataFromName("array",2)
         );
     }
 
@@ -28,7 +29,14 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
     @Test
     public void testLibrarySupport() throws Exception {
 
-        String json = readResource("custom/array/array.json");
+        String json = "{\n" +
+                "  \"a\": [{\"x\":  42}, {\"x\": 777}],\n" +
+                "  \"b\": [],\n" +
+                "  \"c\": {\"y\":  1},\n" +
+                "  \"d\": {\"y\":  2},\n" +
+                "  \"e\": null\n" +
+                "}";
+
         assertNotNull(json);
 
         ONode schema = ONode.ofJson(json);

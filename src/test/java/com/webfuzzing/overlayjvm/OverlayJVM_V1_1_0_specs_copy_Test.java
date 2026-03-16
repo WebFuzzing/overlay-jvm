@@ -16,9 +16,9 @@ class OverlayJVM_V1_1_0_specs_copy_Test extends ProcessorTestBase {
     public static Stream<Data> overlayProvider() {
 
         return Stream.of(
-                new Data("/simple/simple-openapi.yaml", "/simple/simple-overlay.yaml", "/simple/simple-result.yaml"),
-                new Data("/exist/exist-openapi.yaml", "/exist/exist-overlay.yaml", "/exist/exist-result.yaml"),
-                new Data("/move/move-openapi.yaml", "/move/move-overlay.yaml", "/move/move-result.yaml")
+                new Data("/simple/simple-openapi.yaml", "/simple/simple-overlay.yaml", "/simple/simple-result.yaml",0),
+                new Data("/exist/exist-openapi.yaml", "/exist/exist-overlay.yaml", "/exist/exist-result.yaml",0),
+                new Data("/move/move-openapi.yaml", "/move/move-overlay.yaml", "/move/move-result.yaml",0)
         );
     }
 

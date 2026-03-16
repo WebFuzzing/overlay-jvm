@@ -1,0 +1,10 @@
+# Technically, not an openapi schema, but library should still work
+a:
+  - x: 42
+  - x: 777
+b: [9]
+c:
+  y: 1
+d:
+  y: 2
+e: null

@@ -47,18 +47,18 @@ public class OverlayJVM_V1_0_0_oas_overlay_java_Test extends ProcessorTestBase {
     public static Stream<Data> overlayProvider() {
 
         return Stream.of(
-                new Data("/openapi/town.yaml", "/overlays/remove-properties.yaml", "/expected/town-remove-properties.yaml"),
-                new Data("/openapi/petstore.yaml", "/overlays/overlay.yaml", "/expected/output1.yaml"),
-                new Data("/openapi/town.yaml", "/overlays/building-description.yaml", "/expected/town-building-description.yaml"),
-                new Data("/openapi/town.yaml", "/overlays/update-root.yaml", "/expected/town-root-updated.yaml"),
-                new Data("/openapi/town.yaml", "/overlays/remove-example.yaml", "/expected/town-remove-example.yaml"),
-                new Data("/openapi/town.yaml", "/overlays/remove-descriptions.yaml", "/expected/town-remove-descriptions.yaml"),
-                new Data("/openapi/openapi-with-servers.yaml", "/overlays/remove-server.yaml", "/expected/one-less-server.yaml"),
+                new Data("/openapi/town.yaml", "/overlays/remove-properties.yaml", "/expected/town-remove-properties.yaml",0),
+                new Data("/openapi/petstore.yaml", "/overlays/overlay.yaml", "/expected/output1.yaml",0),
+                new Data("/openapi/town.yaml", "/overlays/building-description.yaml", "/expected/town-building-description.yaml",0),
+                new Data("/openapi/town.yaml", "/overlays/update-root.yaml", "/expected/town-root-updated.yaml",0),
+                new Data("/openapi/town.yaml", "/overlays/remove-example.yaml", "/expected/town-remove-example.yaml",0),
+                new Data("/openapi/town.yaml", "/overlays/remove-descriptions.yaml", "/expected/town-remove-descriptions.yaml",0),
+                new Data("/openapi/openapi-with-servers.yaml", "/overlays/remove-server.yaml", "/expected/one-less-server.yaml",0),
                 //this seems was wrong... you are allowed to modify info.version
-                new Data("/openapi/immutable.yaml", "/overlays/immutable.yaml", "/expected/immutable.yaml"),
-                new Data("/openapi/responses.yaml", "/overlays/remove-responses.yaml", "/expected/remove-responses.yaml"),
+                new Data("/openapi/immutable.yaml", "/overlays/immutable.yaml", "/expected/immutable.yaml",0),
+                new Data("/openapi/responses.yaml", "/overlays/remove-responses.yaml", "/expected/remove-responses.yaml",0),
                 //this seems was wrong... invalid RFC 9535 path
-                new Data("/openapi/traits.yaml", "/overlays/traits.yaml", "/expected/traits.yaml")
+                new Data("/openapi/traits.yaml", "/overlays/traits.yaml", "/expected/traits.yaml",0)
         );
     }
 
