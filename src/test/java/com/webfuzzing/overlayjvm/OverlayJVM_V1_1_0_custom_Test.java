@@ -15,7 +15,8 @@ public class OverlayJVM_V1_1_0_custom_Test extends ProcessorTestBase {
 
         return Stream.of(
                 getDataFromName("query-examples", 0),
-                getDataFromName("array",2)
+                getDataFromName("array",2),
+                getDataFromName("named-examples",0)
         );
     }
 

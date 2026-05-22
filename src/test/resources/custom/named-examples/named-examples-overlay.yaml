@@ -1,0 +1,33 @@
+overlay: 1.1.0
+info:
+  title: Add Examples to API
+  version: 1.0.0
+actions:
+  - target: '$.paths["/api"].post.parameters[?(@.name=="y")]'
+    description: Add foo example to query parameter y
+    update:
+      examples:
+        foo:
+          value: Foo
+
+  - target: '$.paths["/api"].post.parameters[?(@.name=="x")]'
+    description: Add bar example to query parameter x
+    update:
+      examples:
+        bar:
+          value: Bar
+
+  - target: '$.paths["/api"].post.parameters[?(@.name=="y")]'
+    description: Add bar example to query parameter y
+    update:
+      examples:
+        bar:
+          value: Bar
+
+  - target: '$.paths["/api"].post.requestBody.content["application/json"]'
+    update:
+      examples:
+        bar:
+          value:
+            id: "bar-id-123"
+            name: "Bar Name Example"
