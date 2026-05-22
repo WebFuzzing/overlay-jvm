@@ -21,19 +21,21 @@ jobs:
   full-build-base:
     runs-on: ${{ matrix.os }}
     strategy:
+        fail-fast: false
         matrix:
           os: [ ubuntu-latest, windows-latest, macos-latest ]
           jdk: [1.8, 11, 17, 21, 25]
     steps:
       # Checkout code
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
       # Build/test for JDK
       - name: Setup JDK
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v5
         with:
+          distribution: temurin
           java-version: ${{ matrix.jdk }}
       - name: Cache Maven packages
-        uses: actions/cache@v3
+        uses: actions/cache@v5
         with:
           path: ~/.m2
           key: ${{ runner.os }}-m2-${{ hashFiles('**/pom.xml') }}
@@ -43,7 +45,7 @@ jobs:
       # Make test report accessible from GitHub Actions (as Maven logs are long)
       - name: Publish Test Report
         if: success() || failure()
-        uses: mikepenz/action-junit-report@v4
+        uses: mikepenz/action-junit-report@v6
         env:
           NODE_OPTIONS: "--max_old_space_size=6144"
         with:
