@@ -32,7 +32,7 @@ jobs:
       - name: Setup JDK
         uses: actions/setup-java@v5
         with:
-          distribution: temurin
+          distribution: corretto
           java-version: ${{ matrix.jdk }}
       - name: Cache Maven packages
         uses: actions/cache@v5
