@@ -83,7 +83,8 @@ public class OverlayJVM {
                 the action succeeds without changing the target document."
             */
             if(!schema.exists(a.getTarget())){
-                warnings.add("["+i+"] Target RFC 9535 JsonPath returned no nodes in the schema: " + a.getTarget());
+                warnings.add("["+i+"] Target RFC 9535 JsonPath returned no nodes in the schema for the requested path: " + a.getTarget()
+                    + "\n     The longest valid match on the schema for that query is: " + JsonPathUtils.closestMatch(schema, a.getTarget()));
                 continue;
             }
 
