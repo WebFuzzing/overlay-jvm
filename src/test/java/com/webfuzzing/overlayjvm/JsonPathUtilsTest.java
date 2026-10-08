@@ -81,6 +81,12 @@ public class JsonPathUtilsTest {
         String missingGet = "$.paths[\"/api\"].get.parameters[?(@.name==\"x\")]";
         assertEquals("$.paths[\"/api\"]", JsonPathUtils.closestMatch(root, missingGet));
 
+        String missingAfterDescendantSegment = "$.paths['/api']..missing";
+        assertEquals("$.paths['/api']", JsonPathUtils.closestMatch(root, missingAfterDescendantSegment));
+
+        String matchingDescendantSegment = "$.paths['/api']..parameters[?(@.name==\"x\")]";
+        assertEquals(matchingDescendantSegment, JsonPathUtils.closestMatch(root, matchingDescendantSegment));
+
         String differentTree = "$.foo";
         assertEquals("$", JsonPathUtils.closestMatch(root, differentTree));
     }

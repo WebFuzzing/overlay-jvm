@@ -2,6 +2,7 @@ package com.webfuzzing.overlayjvm;
 
 import org.noear.snack4.ONode;
 import org.noear.snack4.jsonpath.JsonPath;
+import org.noear.snack4.jsonpath.segment.DescendantSegment;
 
 
 public class JsonPathUtils {
@@ -32,10 +33,13 @@ public class JsonPathUtils {
             return jsonpath;
         }
 
-        while (path.getSegmentCount() > 1) {
-            path = path.subPath(path.getSegmentCount() - 1);
-            if (!path.select(root).isEmpty()) {
-                return path.getExpression();
+        for (int level = path.getSegmentCount() - 1; level > 0; level--) {
+            if (path.getSegments().get(level - 1) instanceof DescendantSegment) {
+                continue;
+            }
+            JsonPath prefix = path.subPath(level);
+            if (!prefix.select(root).isEmpty()) {
+                return prefix.getExpression();
             }
         }
 
